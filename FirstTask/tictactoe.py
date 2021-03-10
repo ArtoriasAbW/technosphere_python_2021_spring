@@ -63,7 +63,7 @@ class TicTacToe:
         return self.win(2)
 
     def end_condition(self):
-        if len(self.free) == 0:
+        if len(self.free) == 0 or 0 not in self.field:
             return True
         return False
 
