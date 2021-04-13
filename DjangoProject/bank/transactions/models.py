@@ -1,17 +1,18 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Transaction(models.Model):
-    transaction_id = models.BigIntegerField(validators=[MinValueValidator(1_00000_00000_0000),
-                                                        MinValueValidator(99999_99999_99999)],
-                                            primary_key=True)
+    transaction_id = models.BigIntegerField(verbose_name='Идентификатор транзакции',
+                                            validators=[MinValueValidator(1_00000_00000_0000),
+                                                        MaxValueValidator(99999_99999_99999)],
+                                            unique=True)
     time = models.DateTimeField(null=False)
-    sender = models.ForeignKey('accounts.Account', null=False, on_delete=models.CASCADE,
-                               related_name='%(class)s_sender')
-    receiver = models.ForeignKey('accounts.Account', null=False, on_delete=models.CASCADE,
-                                 related_name='%(class)s_receiver')
-    amount = models.FloatField(null=False)
+    sender = models.ForeignKey('accounts.Account', null=True, on_delete=models.SET_NULL,
+                               related_name='%(class)s_sender', verbose_name='Отправитель')
+    receiver = models.ForeignKey('accounts.Account', null=True, on_delete=models.SET_NULL,
+                                 related_name='%(class)s_receiver', verbose_name='Получатель')
+    amount = models.FloatField(null=False, verbose_name='Сумма транзакции')
 
     def __str__(self):
         return str(self.transaction_id)

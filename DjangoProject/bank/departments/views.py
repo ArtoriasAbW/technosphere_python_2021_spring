@@ -15,7 +15,10 @@ def departments_list(request):
 
 def department_info(request, department_id):
     if request.method == 'GET':
-        department = Department.objects.get(pk=department_id)
+        try:
+            department = Department.objects.get(pk=department_id)
+        except Department.DoesNotExist:
+            return JsonResponse({'status': 'Департамент не существует'})
         return JsonResponse({'Название': department.name,
                              'Адрес': department.address,
                              'Номер телефона': department.phone_number})

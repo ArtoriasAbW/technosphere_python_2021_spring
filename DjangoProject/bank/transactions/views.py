@@ -16,8 +16,12 @@ def transactions_list(request):
 
 def transaction_info(request, transaction_id):
     if request.method == 'GET':
-        transaction = Transaction.objects.get(pk=transaction_id)
-        return JsonResponse({'Отправитель': transaction.sender.account_number,
+        try:
+            transaction = Transaction.objects.get(pk=transaction_id)
+        except Transaction.DoesNotExist:
+            return JsonResponse({'status': 'транзакция не существует'})
+        return JsonResponse({'Идентификатор транзакции': transaction.transaction_id,
+                             'Отправитель': transaction.sender.account_number,
                              'Получатель': transaction.receiver.account_number,
                              'Время': transaction.time,
                              'Сумма': transaction.amount})
@@ -29,8 +33,8 @@ def transaction_add(request):
         request_params = request.GET.dict()  # request.POST.dict() when form-data
         transaction = Transaction(transaction_id=request_params['transaction_id'],
                                   time=request_params['time'],
-                                  sender=Account.objects.get(pk=request_params['sender_number']),
-                                  receiver=Account.objects.get(pk=request_params['receiver_number']),
+                                  sender=Account.objects.get(pk=request_params['sender_id']),
+                                  receiver=Account.objects.get(pk=request_params['receiver_id']),
                                   amount=request_params['amount'])
         transaction.clean_fields()  # validation
         transaction.save()

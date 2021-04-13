@@ -34,7 +34,7 @@ urlpatterns = [
     path('departments/add/', department_add, name='department_add'),
     path('transactions/add/', transaction_add, name='transaction_add'),
     path('clients/<int:client_id>/', client_info, name='client_info'),
-    path('accounts/<int:account_number>/', account_info, name='account_info'),
+    path('accounts/<int:account_id>/', account_info, name='account_info'),
     path('departments/<int:department_id>/', department_info, name='department_info'),
     path('transactions/<int:transaction_id>/', transaction_info, name='transaction_info'),
 

@@ -15,10 +15,14 @@ def accounts_list(request):
     return HttpResponseNotAllowed('Not Allowed')
 
 
-def account_info(request, account_number):
+def account_info(request, account_id):
     if request.method == 'GET':
-        account = Account.objects.get(pk=account_number)
-        return JsonResponse({'Статус': account.account_status,
+        try:
+            account = Account.objects.get(pk=account_id)
+        except Account.DoesNotExist:
+            return JsonResponse({'status': 'Аккаунт не существует'})
+        return JsonResponse({'Номер счета': account.account_number,
+                             'Статус': account.account_status,
                              'Баланс': account.account_balance,
                              'Дата открытия': account.opening_date,
                              'Владелец': account.client.name,

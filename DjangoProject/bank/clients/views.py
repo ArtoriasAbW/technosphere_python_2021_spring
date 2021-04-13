@@ -15,7 +15,10 @@ def clients_list(request):
 
 def client_info(request, client_id):
     if request.method == 'GET':
-        client = Client.objects.get(pk=client_id)
+        try:
+            client = Client.objects.get(pk=client_id)
+        except Client.DoesNotExist:
+            return JsonResponse({'status': 'Клиент не существует'})
         return JsonResponse({'Имя': client.name,
                              'Номер телефона': client.phone_number,
                              'email': client.email,
