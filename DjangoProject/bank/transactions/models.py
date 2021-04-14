@@ -18,5 +18,6 @@ class Transaction(models.Model):
         return str(self.transaction_id)
 
     class Meta:
+        ordering = ['-time']
         verbose_name = 'Транзакция'
         verbose_name_plural = 'Транзакции'

@@ -17,5 +17,6 @@ class Account(models.Model):
         return str(self.account_number)
 
     class Meta:
+        ordering = ['-opening_date']
         verbose_name = 'Счет'
         verbose_name_plural = 'Счета'

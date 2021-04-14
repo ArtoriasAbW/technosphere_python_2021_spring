@@ -12,6 +12,7 @@ class Client(models.Model):
         return self.name
 
     class Meta:
+        ordering = ['name', '-registration_date']
         verbose_name = 'Клиент'
         verbose_name_plural = 'Клиенты'
 
