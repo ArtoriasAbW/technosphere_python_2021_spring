@@ -16,3 +16,7 @@ class Transaction(models.Model):
 
     def __str__(self):
         return str(self.transaction_id)
+
+    class Meta:
+        verbose_name = 'Транзакция'
+        verbose_name_plural = 'Транзакции'

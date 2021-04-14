@@ -15,3 +15,7 @@ class Account(models.Model):
 
     def __str__(self):
         return str(self.account_number)
+
+    class Meta:
+        verbose_name = 'Счет'
+        verbose_name_plural = 'Счета'
