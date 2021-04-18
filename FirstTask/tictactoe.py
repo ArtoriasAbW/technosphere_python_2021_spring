@@ -1,15 +1,30 @@
+from enum import Enum
+
+
+class Cell(Enum):
+    EMPTY = 0
+    X = 1
+    O = 2
+
+
 class TicTacToe:
 
-    def __init__(self):
-        self.cur_turn = 1  # 1 if X, 2 if O
+    def __init__(self, field_size):
+        self.cur_turn = Cell.X
         self.field = list()
-        for _ in range(9):
-            self.field.append(0)
-        self.free = list(range(1, 10))  # free positions
+        self.field_size = field_size
+        for _ in range(field_size * field_size):
+            self.field.append(Cell.EMPTY)
+        self.free = list(range(1, field_size * field_size + 1))  # free positions
 
     def turn(self):
+        if (self.cur_turn == Cell.X):
+            print("X turn: ", end="")
+        else:
+            print("O turn: ", end="")
         try:
             pos = int(input())
+            print()
         except ValueError:
             print("Invalid input")
             return
@@ -17,55 +32,62 @@ class TicTacToe:
             print("Invalid position")
             return
         self.free.remove(pos)
-        if self.cur_turn == 1:
-            self.field[pos - 1] = 1
-            self.cur_turn = 2
+        if self.cur_turn == Cell.X:
+            self.field[pos - 1] = Cell.X
+            self.cur_turn = Cell.O
         else:
-            self.field[pos - 1] = 2
-            self.cur_turn = 1
+            self.field[pos - 1] = Cell.O
+            self.cur_turn = Cell.X
 
     def draw(self):
-        for i in range(3):
-            for j in range(3):
-                if self.field[3*i+j] == 0:
-                    print("{}".format(3 * i + j + 1), end="")
-                elif self.field[3*i+j] == 1:
-                    print("X", end="")
+        for i in range(self.field_size):
+            for j in range(self.field_size):
+                if self.field[self.field_size*i+j] == Cell.EMPTY:
+                    print("{:>2}".format(self.field_size * i + j + 1), end="")
+                elif self.field[self.field_size*i+j] == Cell.X:
+                    print("{:>2}".format("X"), end="")
                 else:
-                    print("O", end="")
-                if (j != 2):
+                    print("{:>2}".format("O"), end="")
+                if (j != self.field_size - 1):
                     print("|", end="")
-            print("\n-----")
+            if (i != self.field_size - 1):
+                print("\n" + "---" * self.field_size)
+            else:
+                print("\n")
 
     def win(self, player):
-        if self.field[0] == self.field[1] == self.field[2] == player:
-            return True
-        if self.field[3] == self.field[4] == self.field[5] == player:
-            return True
-        if self.field[6] == self.field[7] == self.field[8] == player:
-            return True
-        if self.field[0] == self.field[4] == self.field[8] == player:
-            return True
-        if self.field[2] == self.field[4] == self.field[6] == player:
-            return True
-        if self.field[0] == self.field[3] == self.field[6] == player:
-            return True
-        if self.field[1] == self.field[4] == self.field[7] == player:
-            return True
-        if self.field[2] == self.field[5] == self.field[8] == player:
-            return True
-        return False
+        for i in range(self.field_size):
+            hor_win = True
+            vert_win = True
+            for j in range(self.field_size):
+                if not hor_win and not vert_win:
+                    break
+                if self.field[self.field_size * i + j] != player:
+                    hor_win = False
+                if self.field[self.field_size * j + i] != player:
+                    vert_win = False
+            if hor_win or vert_win:
+                return True
+
+        lr_win = True
+        rl_win = True
+        for i in range(self.field_size):
+            if not lr_win and not rl_win:
+                return False
+            if self.field[self.field_size * i + i] != player:
+                lr_win = False;
+            if self.field[self.field_size * (i + 1) - i] != player:
+                rl_win = False
+        return lr_win or rl_win
 
     def X_win(self):
-        return self.win(1)
+        return self.win(Cell.X)
 
     def O_win(self):
-        return self.win(2)
+        return self.win(Cell.O)
 
     def end_condition(self):
-        if len(self.free) == 0 or 0 not in self.field:
-            return True
-        return False
+        return len(self.free) == 0
 
     def play(self):
         end = False
@@ -86,5 +108,5 @@ class TicTacToe:
 
 
 if __name__ == "__main__":
-    game = TicTacToe()
+    game = TicTacToe(3)
     game.play()
