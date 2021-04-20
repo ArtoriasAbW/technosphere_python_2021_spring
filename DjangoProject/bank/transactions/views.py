@@ -27,7 +27,7 @@ def transaction_info(request, transaction_id):
 
 @require_http_methods(['POST'])
 def transaction_add(request):
-    request_params = request.GET.dict()  # request.POST.dict() when form-data
+    request_params = request.POST.dict()
     transaction = Transaction(transaction_id=request_params['transaction_id'],
                               time=request_params['time'],
                               sender=Account.objects.get(pk=request_params['sender_id']),

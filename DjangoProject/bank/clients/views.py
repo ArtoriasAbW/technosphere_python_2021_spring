@@ -26,7 +26,7 @@ def client_info(request, client_id):
 
 @require_http_methods(['POST'])
 def client_add(request):
-    request_params = request.GET.dict()  # request.POST.dict() when form-data
+    request_params = request.POST.dict()  # request.POST.dict() when form-data
     client = Client(name=request_params['name'],
                     phone_number=request_params['phone_number'],
                     email=request_params['email'],

@@ -23,7 +23,7 @@ def department_info(request, department_id):
 
 @require_http_methods(['POST'])
 def department_add(request):
-    request_params = request.GET.dict()  # request.POST.dict() when form-data
+    request_params = request.POST.dict()
     name = request_params['name']
     address = request_params['address']
     phone_number = request_params['phone_number']

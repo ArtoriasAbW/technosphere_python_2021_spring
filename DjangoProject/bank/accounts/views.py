@@ -29,7 +29,7 @@ def account_info(request, account_id):
 
 @require_http_methods(['POST'])
 def account_add(request):
-    request_params = request.GET.dict()  # request.POST.dict() when form-data
+    request_params = request.POST.dict()
     account = Account(account_number=request_params['account_number'],
                       account_status=request_params['account_status'],
                       account_balance=request_params['account_balance'],
