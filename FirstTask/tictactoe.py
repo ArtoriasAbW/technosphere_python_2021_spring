@@ -15,7 +15,8 @@ class TicTacToe:
         self.field_size = field_size
         for _ in range(field_size * field_size):
             self.field.append(Cell.EMPTY)
-        self.free = list(range(1, field_size * field_size + 1))  # free positions
+        # free positions
+        self.free = list(range(1, field_size * field_size + 1))
 
     def turn(self):
         if (self.cur_turn == Cell.X):
@@ -56,6 +57,7 @@ class TicTacToe:
                 print("\n")
 
     def win(self, player):
+        # победа по горизонтали и вертикали
         for i in range(self.field_size):
             hor_win = True
             vert_win = True
@@ -68,15 +70,15 @@ class TicTacToe:
                     vert_win = False
             if hor_win or vert_win:
                 return True
-
+        # победа наискосок
         lr_win = True
         rl_win = True
         for i in range(self.field_size):
             if not lr_win and not rl_win:
                 return False
             if self.field[self.field_size * i + i] != player:
-                lr_win = False;
-            if self.field[self.field_size * (i + 1) - i] != player:
+                lr_win = False
+            if self.field[(self.field_size - 1) + self.field_size * i - i] != player:
                 rl_win = False
         return lr_win or rl_win
 

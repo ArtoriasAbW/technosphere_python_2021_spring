@@ -1,2 +1,0 @@
-
-            vert_win = True
