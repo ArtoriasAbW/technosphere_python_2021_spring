@@ -6,8 +6,7 @@ from django.views.decorators.http import require_http_methods
 
 @require_http_methods(['GET'])
 def departments_list(request):
-    departments = list(Department.objects.all())
-    data = serializers.serialize('json', departments)
+    data = serializers.serialize('json', Department.objects.all())
     return JsonResponse({'departments': data})
 
 
