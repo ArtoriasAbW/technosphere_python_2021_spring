@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'transactions.apps.TransactionsConfig',
     'accounts.apps.AccountsConfig',
     'users.apps.UsersConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
