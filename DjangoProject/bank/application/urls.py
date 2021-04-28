@@ -20,7 +20,7 @@ from rest_framework.routers import DefaultRouter
 from application.view import main
 
 from clients.views import ClientViewSet
-from departments.views import DepartmentViewSet, department_form
+from departments.views import DepartmentViewSet, department_add
 from accounts.views import AccountViewSet
 from transactions.views import TransactionViewSet
 from users.views import test_view
@@ -36,7 +36,7 @@ urlpatterns = [
     path('', main, name='main'),
     path('admin/', admin.site.urls),
     path('regform/', test_view, name='test_view'),
-    path('department_form/', department_form, name='department_form'),
+    path('department_form/', department_add, name='department_add'),
 ]
 
 urlpatterns += router.urls

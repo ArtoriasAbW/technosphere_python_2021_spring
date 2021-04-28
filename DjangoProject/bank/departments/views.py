@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from rest_framework import viewsets
 from departments.serializers import DepartmentSerializer
@@ -11,17 +11,12 @@ class DepartmentViewSet(viewsets.ModelViewSet):
     queryset = Department.objects.all()
 
 
-def department_form(request):
+def department_add(request):
     if request.method == 'POST':
-
         form = DepartmentForm(request.POST)
         if form.is_valid():
-            department = Department(name=form.cleaned_data['name'],
-                                    address=form.cleaned_data['address'],
-                                    phone_number=form.cleaned_data['phone_number'])
-            department.save()
-            return HttpResponse('department added')
-
+            department = form.save()
+            return JsonResponse({'status': 'department added', 'department_id': department.id})
     else:
         form = DepartmentForm()
 
