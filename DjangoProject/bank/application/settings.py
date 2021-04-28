@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'users.apps.UsersConfig',
     'rest_framework',
+    # 'sslserver'
 ]
 
 MIDDLEWARE = [
