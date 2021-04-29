@@ -14,16 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-
-from application.view import main
+from django.contrib.auth import views as auth_views
+from application.views import home, login, main
 
 from clients.views import ClientViewSet
-from departments.views import DepartmentViewSet, department_add
+from departments.views import DepartmentViewSet
 from accounts.views import AccountViewSet
 from transactions.views import TransactionViewSet
-from users.views import test_view
 
 router = DefaultRouter()
 router.register(r'clients', ClientViewSet, 'clients')
@@ -35,8 +34,9 @@ router.register(r'transactions', TransactionViewSet, 'transactions')
 urlpatterns = [
     path('', main, name='main'),
     path('admin/', admin.site.urls),
-    path('regform/', test_view, name='test_view'),
-    path('department_form/', department_add, name='department_add'),
+    path('login/', login, name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('social_auth/', include('social_django.urls', namespace='social')),
 ]
 
 urlpatterns += router.urls

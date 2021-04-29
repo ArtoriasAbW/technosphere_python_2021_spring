@@ -6,9 +6,8 @@
 </head>
 <body>
     <h1>Система информации о счетах клиентов банка</h1>
-    {% for key, value in data.items %}
-    <li><strong>{{key}}: </strong><strong>{{value}}</strong></li>
-    {% endfor %}
+    <h4 align="right"> Вы вошли как {% if user.first_name %}{{ user.first_name }}{% else %}{{ user.username }}{% endif %} </h4>
+    <h4 align="right"><a href="/logout">Выйти</a></h4>
     <p><a href="/departments">Отделения</a></p>
     <p><a href="/clients">Клиенты</a></p>
     <p><a href="/accounts">Счета</a></p>

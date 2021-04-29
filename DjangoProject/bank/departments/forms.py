@@ -17,7 +17,7 @@ class DepartmentForm(ModelForm):
 
     def clean_name(self):
         name = self.cleaned_data['name']
-        if not name.isalpha():
+        if not name[0].isalpha():
             raise ValidationError('Названия отделения должно начинаться с буквы', code='letter_first')
         if name[0].capitalize() != name[0]:
             raise ValidationError('Название отделения должно начинаться с ЗАГЛАВНОЙ буквы', code='upper_first')
