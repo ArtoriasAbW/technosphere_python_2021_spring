@@ -45,6 +45,8 @@ INSTALLED_APPS = [
 
 AUTHENTICATION_BACKENDS = [
     'social_core.backends.vk.VKOAuth2',
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.spotify.SpotifyOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
