@@ -23,12 +23,15 @@ from clients.views import ClientViewSet
 from departments.views import DepartmentViewSet
 from accounts.views import AccountViewSet
 from transactions.views import TransactionViewSet
+from users.views import CustomUserViewSet
+
 
 router = DefaultRouter()
 router.register(r'clients', ClientViewSet, 'clients')
 router.register(r'departments', DepartmentViewSet, 'departments')
 router.register(r'accounts', AccountViewSet, 'accounts')
 router.register(r'transactions', TransactionViewSet, 'transactions')
+router.register(r'users', CustomUserViewSet, 'users')
 
 
 urlpatterns = [

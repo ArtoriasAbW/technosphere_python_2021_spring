@@ -5,4 +5,4 @@ from rest_framework import serializers
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ('id', 'transaction_id', 'time', 'sender', 'receiver', 'amount')
+        fields = '__all__'

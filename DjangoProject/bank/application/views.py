@@ -15,7 +15,7 @@ def need_login(func):
 @need_login
 def main(request):
     if request.method == 'GET':
-        # print(request.user)
+        print(request.user)
         return render(request, 'index.html')
     return HttpResponseNotAllowed('Not Allowed')
 
