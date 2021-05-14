@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from django.contrib.auth import views as auth_views
-from application.views import home, login, main
+from application.views import login, main
 
 from clients.views import ClientViewSet
 from departments.views import DepartmentViewSet

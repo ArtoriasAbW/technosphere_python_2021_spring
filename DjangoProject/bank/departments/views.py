@@ -1,34 +1,30 @@
-
 from rest_framework import viewsets
 from rest_framework.response import Response
 
 from departments.serializers import DepartmentSerializer
 from departments.models import Department
 from users.models import CustomUser
+from django.core.mail import send_mail
+
+
+def log_on_email(func):
+    def wrapper(self, serializer, *args, **kwargs):
+        response = func(self, serializer, *args, **kwargs)
+        send_mail('Новый объект', 'Добавлено новое отделение в базу данных', 'seleznev.pavlex@gmail.com', ['seleznev.pavlex@gmail.com'])
+        return response
+    return wrapper
 
 
 class DepartmentViewSet(viewsets.ModelViewSet):
     serializer_class = DepartmentSerializer
-    queryset = Department.objects.all()
 
-    def list(self, request, *args, **kwargs):
-        auth_user = request.user
+    def get_queryset(self):
+        auth_user = self.request.user
         if not auth_user.is_superuser:
-            self.queryset = Department.objects.filter(user=CustomUser.objects.get(username=auth_user))
-        serializer = DepartmentSerializer(self.queryset, many=True)
-        return Response(serializer.data)
+            return Department.objects.filter(user=CustomUser.objects.get(username=auth_user))
+        else:
+            return Department.objects.all()
 
-    def create(self, request, **kwargs):
-        pass
-
-    def retrieve(self, request, pk=None, **kwargs):
-        pass
-
-    def update(self, request, pk=None, **kwargs):
-        pass
-
-    def partial_update(self, request, pk=None, **kwargs):
-        pass
-
-    def destroy(self, request, pk=None, **kwargs):
-        pass
+    @log_on_email
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)

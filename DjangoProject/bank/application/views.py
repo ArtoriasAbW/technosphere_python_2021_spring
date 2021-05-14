@@ -21,10 +21,4 @@ def main(request):
 
 
 def login(request):
-    print(request.user)
     return render(request, 'login.html')
-
-
-@need_login
-def home(request):
-    return render(request, 'home.html')
